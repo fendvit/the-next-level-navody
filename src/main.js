@@ -3,38 +3,101 @@ import './style.css'
 const products = [
   {
     number: "01",
-    category: "APLIKACE",
-    title: "ONE SEC",
-    description: "Moje první opatření byla aplikace One Sec — zdarma, jednoduchá, efektivní. Stačí ji nainstalovat, povolit oprávnění a zaškrtnout Instagram. To je vše.",
-    link: "#"
+    category: "MINDSET",
+    title: "3 VĚCI KTERÉ POTŘEBUJEŠ VĚDĚT",
+    description: "Základní pilíře pro tvůj osobní rozvoj. Bez těhle tří věcí se nikam neposuneš.",
+    link: "https://drive.google.com/file/d/1mrjTNKxe-DdUijyVpzlrm8plJToVCEFs/view?usp=sharing"
   },
   {
     number: "02",
-    category: "SYSTÉM",
-    title: "RANNÍ FOCUS MODE",
-    description: "Celé prázdniny jsem si začal dávat jedno pravidlo: dopoledne budu mít co nejmenší čas na telefonu. Nastavil jsem si focus mode — a telefon byl prakticky mimo hru.",
-    link: "#"
+    category: "WORKOUT",
+    title: "MOJE PRVNÍ WORKOUT RUTINA",
+    description: "Tohle je přesně ten trénink, se kterým jsem začínal. Jednoduchý, ale extrémně účinný.",
+    link: "https://drive.google.com/file/d/1mrjTNKxe-DdUijyVpzlrm8plJToVCEFs/view?usp=sharing"
   },
   {
     number: "03",
-    category: "PRINCIP Č. 1",
-    title: "DENÍK ŠAMPIONA",
-    description: "Vezmi si jakýkoliv deník nebo sešit a napiš si do něj každou svoji výhru. Úplně každou. Od toho, že ses dostal na základku, až po úplně každý tvůj úspěch.",
-    link: "#"
+    category: "MINDSET",
+    title: "3 RADY NA ULTRAMARATHON",
+    description: "Jak se mentálně a fyzicky připravit na extrémní zátěž. Posuň svoje limity.",
+    link: "https://drive.google.com/file/d/1Phdi6lwXOC7pvUPep3A34c9nFmx2rFih/view?usp=drive_link"
   },
   {
     number: "04",
-    category: "PRINCIP Č. 2",
-    title: "ZAČNI CVIČIT",
-    description: "Další věc, kterou jsem začal dělat pro svoje sebevědomí, je ta úplně nejjednodušší: začal jsem cvičit.",
-    link: "#"
+    category: "MINDSET",
+    title: "3 LEKCE Z 90. DENNÍ VÝZVY",
+    description: "Co jsem se naučil po třech měsících konzistentní práce. Brutální shift v hlavě.",
+    link: "https://drive.google.com/file/d/17697nhHEhhyEl3efOLILn8Vj5NODbntf/view?usp=drive_link"
   },
   {
     number: "05",
-    category: "PRINCIP Č. 3",
-    title: "DĚLEJ TO, CO SE TI NECHCE",
-    description: "Každý den jsem udělal něco, do čeho se mi fakt nechtělo. Ze začátku to pro mě byla studená sprcha.",
-    link: "#"
+    category: "MINDSET",
+    title: "5 PASTÍ V HLAVĚ",
+    description: "Nejčastější mentální bloky, které tě drží zpátky, a jak se jich konečně zbavit.",
+    link: "https://drive.google.com/file/d/1PfvWdJP1Bhz-lRYaRiCohKhFRTw4eQoN/view?usp=drive_link"
+  },
+  {
+    number: "06",
+    category: "MINDSET",
+    title: "6 VĚCÍ NA LEPŠÍ ŽIVOT",
+    description: "Pár jednoduchých změn, které dramaticky zlepší kvalitu tvého každodenního života.",
+    link: "https://drive.google.com/file/d/1ezz2-jHcdu1CmGy8Vlkb5y7y5GMLZ_ib/view?usp=drive_link"
+  },
+  {
+    number: "07",
+    category: "MINDSET",
+    title: "JAK DĚLAT VĚCI KDYŽ SE TI NECHCE",
+    description: "Praktický návod na to, jak porazit prokrastinaci a budovat železnou disciplínu.",
+    link: "https://drive.google.com/file/d/17neV3QQgXhN7yObfz9igVZ9KXgLvH73s/view?usp=drive_link"
+  },
+  {
+    number: "08",
+    category: "WORKOUT",
+    title: "MOJE WORKOUT RUTINA",
+    description: "Můj aktuální tréninkový plán. Přesně to, co dělám každý týden pro maximální progres.",
+    link: "https://drive.google.com/file/d/1h-vwQ_IE_aFpSuE3XpsKbIAWosMIr_y4/view?usp=drive_link"
+  },
+  {
+    number: "09",
+    category: "MINDSET",
+    title: "ZAČNI TEĎ NE ZÍTRA",
+    description: "Přestaň čekat na ideální moment. Návod, jak udělat první krok hned teď.",
+    link: "https://drive.google.com/file/d/1bvwkXXXPMWrRcvh8SJeyqkoNI3lRO1aT/view?usp=drive_link"
+  },
+  {
+    number: "10",
+    category: "WORKOUT",
+    title: "JAK NA FRONTLEVER",
+    description: "Kompletní progrese a cviky, které tě dovedou k perfektnímu frontleveru.",
+    link: "https://drive.google.com/file/d/1pBSvJF1eZ8RhFWeOadClaXXQRzKlovRJ/view?usp=drive_link"
+  },
+  {
+    number: "11",
+    category: "MINDSET",
+    title: "KDE BERU TOLIK ENERGIE",
+    description: "Moje tajemství na celodenní focus a energii bez kofeinových crashů.",
+    link: "https://drive.google.com/file/d/1NxsvGcDPGNe2Jg-Orm5nu8mL_tLLBwjV/view?usp=drive_link"
+  },
+  {
+    number: "12",
+    category: "MINDSET",
+    title: "5 VĚCÍ KTERÉ TĚ ZMĚNÍ",
+    description: "Pět naprosto zásadních návyků, které od základů překopou tvůj život.",
+    link: "https://drive.google.com/file/d/1CypipkvSu_zqFk97-B3rHPCCOU5fnTb3/view?usp=drive_link"
+  },
+  {
+    number: "13",
+    category: "KNIHY",
+    title: "KNIHY KTERÉ MĚ ZMĚNILY",
+    description: "Moje osobní knihovna. Seznam knih, které nejvíc formovaly můj mindset.",
+    link: "https://drive.google.com/file/d/1qPbGbg5yuhNAA-E27OfoAUDtJADkqdyj/view?usp=drive_link"
+  },
+  {
+    number: "14",
+    category: "MINDSET",
+    title: "VĚTŠÍ SEBEVĚDOMÍ",
+    description: "Praktické kroky k tomu, abys konečně přestal pochybovat sám o sobě.",
+    link: "https://drive.google.com/file/d/1oGgb0FPaqQRVXf7OunzoSttzMo875ODJ/view?usp=drive_link"
   }
 ];
 
