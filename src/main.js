@@ -104,9 +104,9 @@ const products = [
 document.querySelector('#app').innerHTML = `
   <main class="container">
     <header class="header">
-      <p class="subtitle">@FENDR.CALIS — MINDSET GUIDE</p>
+      <p class="subtitle">@FENDR.CALIS</p>
       <h1 class="title">TOHLE CHCEŠ!</h1>
-      <p class="description">Tímhle způsobem jsem se dokázal posunout ze super průměrného a úplně "random" kluka na člověka, který si momentálně jde za svými sny a snaží se na nich pracovat.</p>
+      <p class="description">Čau čau, doufám, že se máš naprosto skvěle! Tady najdeš kompletní knihovnu všech mých rad a návodů, které jsem na Instagramu postoval a vytvářel. Věřím, že pomůžou i tobě! Nezapomeň sledovat <a href="https://www.instagram.com/fendr.calis/" style="color: var(--accent); text-decoration: none; font-weight: 600;">můj Instagram</a>, aby ti žádné další neunikly.</p>
     </header>
     
     <div class="product-list" id="product-list">
