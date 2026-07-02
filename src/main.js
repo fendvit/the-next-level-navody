@@ -105,7 +105,7 @@ document.querySelector('#app').innerHTML = `
   <main class="container">
     <header class="header">
       <p class="subtitle">@FENDR.CALIS — MINDSET GUIDE</p>
-      <h1 class="title">TOHO CHCEŠ?</h1>
+      <h1 class="title">TOHLE CHCEŠ!</h1>
       <p class="description">Tímhle způsobem jsem se dokázal posunout ze super průměrného a úplně "random" kluka na člověka, který si momentálně jde za svými sny a snaží se na nich pracovat.</p>
     </header>
     
