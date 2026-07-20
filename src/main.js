@@ -98,6 +98,20 @@ const products = [
     title: "VĚTŠÍ SEBEVĚDOMÍ",
     description: "Praktické kroky k tomu, abys konečně přestal pochybovat sám o sobě.",
     link: "https://drive.google.com/file/d/1oGgb0FPaqQRVXf7OunzoSttzMo875ODJ/view?usp=drive_link"
+  },
+  {
+    number: "15",
+    category: "MINDSET",
+    title: "PŘEPROGRAMUJ HLAVU",
+    description: "Kompletní návod na to, jak přeprogramovat svoje myšlení a dokázat cokoliv si zamaneš.",
+    link: "https://drive.google.com/file/d/1Q37Padmj8hJ7XGORvVfOVdvC8xwuLp7G/view?usp=sharing"
+  },
+  {
+    number: "16",
+    category: "MINDSET",
+    title: "ULTRAMARATON",
+    description: "Moje další rady a tipy k tomu, jak se mentálně připravit na překonávání vlastních limitů.",
+    link: "https://drive.google.com/file/d/1f3Ypv-n4lUGyxBhUDFrh6PSV10f7tcVJ/view?usp=sharing"
   }
 ];
 
