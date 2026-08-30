@@ -115,7 +115,7 @@ const products = [
   }
 ];
 
-const INSTAGRAM = 'https://www.instagram.com/fendr.calis/'
+const INSTAGRAM = 'https://instagram.com/vitekfendrych'
 const NEWSLETTER = 'https://www.tnextlvl.com/'
 
 const categories = ['VŠE', ...new Set(products.map((p) => p.category))]
@@ -136,7 +136,7 @@ const logo = (size = 'md') => `
       <path d="M 7 93 L 87 13" />
       <path d="M 14 8 L 92 8 L 92 88" />
     </svg>
-    <span class="wordmark${size === 'md' ? '' : ' wordmark-sm'}">FENDR<span class="wordmark-accent">.CALIS</span></span>
+    <span class="wordmark${size === 'md' ? '' : ' wordmark-sm'}">THE NEXT <span class="wordmark-accent">LEVEL</span></span>
   </span>
 `
 
@@ -155,9 +155,9 @@ const highlight = (text, tail = '') =>
 document.querySelector('#app').innerHTML = `
   <header class="site-header">
     <div class="container header-inner">
-      <a class="lockup-link" href="/" aria-label="Fendr.calis — domů">${logo()}</a>
+      <a class="lockup-link" href="/" aria-label="THE NEXT LEVEL — domů">${logo()}</a>
       <nav class="nav" aria-label="Hlavní">
-        <a class="nav-handle" href="${INSTAGRAM}" target="_blank" rel="noopener noreferrer">@fendr.calis</a>
+        <a class="nav-handle" href="${INSTAGRAM}" target="_blank" rel="noopener noreferrer">@vitekfendrych</a>
         <a href="${NEWSLETTER}" target="_blank" rel="noopener noreferrer">Newsletter</a>
         <a class="nav-current" href="#navody" aria-current="page">Návody</a>
       </nav>
@@ -222,7 +222,7 @@ document.querySelector('#app').innerHTML = `
       <div class="container cta-inner">
         <p class="eyebrow">A na závěr</p>
         <h2 class="cta-headline">Věřím, že ty to sakra dokážeš.</h2>
-        <p class="cta-fineprint">@fendr.calis</p>
+        <p class="cta-fineprint">@vitekfendrych</p>
       </div>
     </section>
   </main>
@@ -231,7 +231,7 @@ document.querySelector('#app').innerHTML = `
     <div class="container footer-inner">
       ${logo('sm')}
       <div class="footer-right">
-        <a href="${INSTAGRAM}" target="_blank" rel="noopener noreferrer">@fendr.calis</a>
+        <a href="${INSTAGRAM}" target="_blank" rel="noopener noreferrer">@vitekfendrych</a>
         <a href="${NEWSLETTER}" target="_blank" rel="noopener noreferrer">Newsletter</a>
         <a class="footer-credit" href="https://myve.media/" target="_blank" rel="noopener noreferrer">Vyvinulo MYVE.media</a>
       </div>
