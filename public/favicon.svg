@@ -1,6 +1,11 @@
+<!--
+  Same palette as the newsletter site's arrow favicon: accent ground with the
+  mark in on-accent. The spine keeps the accent colour, so it now reads as a
+  gutter of the tile showing between the two pages rather than a drawn line.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#0e1110" />
-  <g fill="#f2f1ec">
+  <rect width="32" height="32" rx="7" fill="#1749ff" />
+  <g fill="#e9e9e9">
     <path d="M15.2 11.4C13.4 10 10.6 9.2 6.8 9.2 6.3 9.2 6 9.6 6 10.1V21.7C6 22.2 6.3 22.5 6.8 22.5 10.4 22.5 13.2 23.3 15.2 24.7Z" />
     <path d="M16.8 11.4C18.6 10 21.4 9.2 25.2 9.2 25.7 9.2 26 9.6 26 10.1V21.7C26 22.2 25.7 22.5 25.2 22.5 21.6 22.5 18.8 23.3 16.8 24.7Z" />
   </g>
