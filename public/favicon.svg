@@ -1,13 +1,25 @@
 <!--
-  Same palette as the newsletter site's arrow favicon: accent ground with the
-  mark in on-accent. The spine keeps the accent colour, so it now reads as a
-  gutter of the tile showing between the two pages rather than a drawn line.
+  Favicon: the brand arrow on an accent tile. Byte for byte the same mark as
+  the newsletter site's app/icon.svg, so a tab reads as THE NEXT LEVEL
+  whichever half of the brand it belongs to. Change one, change both.
+
+  Replaced an open-book glyph on 2026-09-19: the header here carries the
+  arrow, so the tab and the page were showing two different logos.
+
+  No two hyphens in a row anywhere in this comment. XML forbids it, and an
+  SVG favicon that fails to parse still serves 200 while rendering nothing.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#1749ff" />
-  <g fill="#e9e9e9">
-    <path d="M15.2 11.4C13.4 10 10.6 9.2 6.8 9.2 6.3 9.2 6 9.6 6 10.1V21.7C6 22.2 6.3 22.5 6.8 22.5 10.4 22.5 13.2 23.3 15.2 24.7Z" />
-    <path d="M16.8 11.4C18.6 10 21.4 9.2 25.2 9.2 25.7 9.2 26 9.6 26 10.1V21.7C26 22.2 25.7 22.5 25.2 22.5 21.6 22.5 18.8 23.3 16.8 24.7Z" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="22" fill="#2f56c8" />
+  <g
+    transform="translate(14 14) scale(0.72)"
+    fill="none"
+    stroke="#f2f0ea"
+    stroke-width="11"
+    stroke-linecap="butt"
+    stroke-linejoin="miter"
+  >
+    <path d="M 7 93 L 87 13" />
+    <path d="M 14 8 L 92 8 L 92 88" />
   </g>
-  <rect x="15.1" y="11" width="1.8" height="13.9" rx="0.9" fill="#1749ff" />
 </svg>

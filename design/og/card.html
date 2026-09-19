@@ -1,0 +1,249 @@
+<!doctype html>
+<!--
+  Source of public/og.png — the 1200x630 card social platforms show when a
+  navody.tnextlvl.com link is shared. Before 2026-09-19 this site had no og:
+  tags at all, so a shared link rendered as a bare grey box with a URL.
+
+  Same pipeline as the newsletter site's design/og/card.html, for the same
+  reason: the headline is Arial Bold caps and Arial cannot be committed to a
+  repo or served from Vercel, but the browser doing the render already has it.
+  Ship the raster, not the font.
+
+  Regenerate:  node design/og/build.mjs
+
+  Deliberately not a clone of the newsletter card — the two are siblings. The
+  newsletter card is a portrait next to the headline and the glow sits top
+  left; this one is type across the full width with the glow mirrored to the
+  right, because the page it represents has no photo in its hero either.
+
+  Tokens are duplicated from src/design-system.css because a browser opens
+  this file straight off disk with no build step. If the tokens move, they
+  move here too.
+-->
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+
+      :root {
+        --bg: #08090a;
+        --card: #121317;
+        --text: #f2f0ea;
+        --muted: #8e8f89;
+        --accent: #2f56c8;
+        --accent-hi: #5b86ff;
+        --warm: #ff6a2b;
+        --edge: rgba(255, 255, 255, 0.055);
+        --lift: inset 0 1px 0 rgba(255, 255, 255, 0.055), 0 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      html, body { margin: 0; padding: 0; }
+
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        position: relative;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Arial, Helvetica, "Liberation Sans", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Mirrored to the right, where the newsletter card puts it left. */
+      body::before {
+        content: "";
+        position: absolute;
+        right: -220px;
+        top: -300px;
+        width: 950px;
+        height: 950px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(47, 86, 200, 0.26) 0%,
+          rgba(47, 86, 200, 0.08) 45%,
+          transparent 70%
+        );
+      }
+
+      .card {
+        position: relative;
+        height: 100%;
+        padding: 64px 72px 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      /* ── Lockup ─────────────────────────────────────────────────────────── */
+      .lockup {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+      }
+
+      .lockup svg {
+        width: 26px;
+        height: 26px;
+        flex: none;
+      }
+
+      .wordmark {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+      }
+
+      /* The one thing that tells you which half of the brand this is. Set in
+         the accent so it reads as a label on the wordmark, not a third word
+         in it. */
+      .which {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--accent-hi);
+      }
+
+      /* ── Headline ───────────────────────────────────────────────────────────
+         h1 from the design system. Much bigger than the newsletter card's
+         58px because this card is type across the full width with no photo
+         beside it — at 68px it left the right half of the card as an empty
+         blue void.
+
+         Breaks and size are both measured, not guessed. Content width is
+         1056px (1200 less 2x72 padding), and Arial Bold caps at 92px sets
+         these three lines at 906 / 633 / 896px, the sweep's 27px right
+         overhang and the full stop included. Change a word and the numbers
+         change — measure again rather than nudging until it looks right. */
+      h1 {
+        margin: 0;
+        font-size: 92px;
+        line-height: 1.16;
+        letter-spacing: -0.01em;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .hl {
+        position: relative;
+        display: inline-block;
+        white-space: nowrap;
+        color: var(--bg);
+        isolation: isolate;
+      }
+
+      .hl svg {
+        position: absolute;
+        left: -13px;
+        top: -7px;
+        z-index: -1;
+        width: calc(100% + 40px);
+        height: calc(100% + 16px);
+        transform: rotate(-0.7deg);
+      }
+
+      .hl svg path { fill: var(--text); }
+
+      /* position:relative is load-bearing — see .hl-tail in the design system.
+         Without it the full stop paints under the sweep's overhang and the
+         only orange on the card disappears. */
+      .stop {
+        position: relative;
+        color: var(--warm);
+      }
+
+      /* ── Bottom row ─────────────────────────────────────────────────────── */
+      .foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      /* The real categories out of products.json. The guide COUNT is
+         deliberately absent: the MCP connector commits new guides to that
+         file, and a number baked into a raster would start lying the first
+         time it did. Categories change about never. */
+      .cats {
+        display: flex;
+        gap: 12px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 22px;
+        border-radius: 999px;
+        background: var(--card);
+        border: 1px solid var(--edge);
+        box-shadow: var(--lift);
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .strip {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .strip .rule {
+        width: 54px;
+        height: 2px;
+        background: linear-gradient(90deg, rgba(91, 134, 255, 0), var(--accent-hi));
+      }
+
+      .strip span {
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="lockup">
+        <!-- The brand arrow, same paths as src/main.js and the newsletter
+             site's components/Brand.tsx. -->
+        <svg viewBox="0 0 100 100" fill="none" stroke="#f2f0ea" stroke-width="9"
+             stroke-linecap="butt" stroke-linejoin="miter">
+          <path d="M 7 93 L 87 13" />
+          <path d="M 14 8 L 92 8 L 92 88" />
+        </svg>
+        <span class="wordmark">The Next Level</span>
+        <span class="which">Návody</span>
+      </div>
+
+      <h1>
+        Všechno, co jsem<br />
+        kdy natočil,<br />
+        <span class="hl"><svg viewBox="0 0 300 60" preserveAspectRatio="none"><path
+          d="M1 6 C60 2 120 10 180 4 C232 1 268 8 299 3 L298 55 C250 58 198 51 148 57 C98 59 46 52 2 57 Z"
+        /></svg>na jednom místě</span><span class="stop">.</span>
+      </h1>
+
+      <div class="foot">
+        <div class="cats">
+          <span class="pill">Mindset</span>
+          <span class="pill">Workout</span>
+          <span class="pill">Knihy</span>
+        </div>
+
+        <div class="strip">
+          <span>Zdarma · Bez registrace</span>
+          <span class="rule"></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

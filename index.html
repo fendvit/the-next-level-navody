@@ -2,12 +2,50 @@
 <html lang="cs">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <!-- Matches --bg in the shared design system. -->
     <meta name="theme-color" content="#08090a" />
+
     <title>Návody — THE NEXT LEVEL</title>
     <meta name="description" content="Kompletní knihovna návodů a rad od @vitekfendrych — mindset, trénink a knihy. Zdarma a bez registrace." />
+
+    <!--
+      Icons. The SVG favicon is the brand arrow and is byte-identical to the
+      newsletter site's app/icon.svg, so a tab reads as THE NEXT LEVEL
+      whichever half of the brand it belongs to. Safari will not take an SVG
+      for the home-screen icon, hence the 180px raster beside it; both are
+      generated from design/og/, see that folder.
+    -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!--
+      Share card. Until 2026-09-19 this page had no og: tags at all, so every
+      link to it — in Vít's Instagram bio, in a DM, in the newsletter — showed
+      as a bare grey box with a URL under it. The image is a committed raster
+      built from design/og/card.html; regenerate with `node design/og/build.mjs`.
+
+      Absolute URL, not /og.png: every scraper rejects a relative og:image.
+      This is a single static page on one domain, so the URL is hardcoded
+      rather than derived — if the domain ever changes, this line changes with
+      it.
+    -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="THE NEXT LEVEL" />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:url" content="https://navody.tnextlvl.com/" />
+    <meta property="og:title" content="Návody — THE NEXT LEVEL" />
+    <meta property="og:description" content="Kompletní knihovna návodů a rad od @vitekfendrych — mindset, trénink a knihy. Zdarma a bez registrace." />
+    <meta property="og:image" content="https://navody.tnextlvl.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Všechno, co jsem kdy natočil, na jednom místě." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Návody — THE NEXT LEVEL" />
+    <meta name="twitter:description" content="Kompletní knihovna návodů a rad od @vitekfendrych — mindset, trénink a knihy. Zdarma a bez registrace." />
+    <meta name="twitter:image" content="https://navody.tnextlvl.com/og.png" />
+
     <!--
       Inter on body and UI text only. Headings are Arial/Helvetica Bold in all
       caps (Vít's call, 2026-09-18), which needs no webfont, so this is the

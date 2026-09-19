@@ -1,0 +1,43 @@
+<!doctype html>
+<!--
+  Source of public/apple-touch-icon.png — the icon iOS uses when the site is
+  added to the home screen. Safari will not take an SVG for this, so the
+  arrow has to be rendered as a 180x180 raster.
+
+  The newsletter site gets the same icon from app/apple-icon.tsx, which it can
+  do because Next renders it at build time. This site is a static Vite build
+  with no image runtime, so the raster is committed instead.
+
+  No rounded corners on purpose: iOS applies its own mask, and a tile that is
+  already rounded comes out with the corners clipped twice.
+
+  Regenerate:  node design/og/build.mjs
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      html, body { margin: 0; padding: 0; }
+
+      body {
+        width: 180px;
+        height: 180px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* --accent, matching public/favicon.svg. */
+        background: #2f56c8;
+      }
+
+      svg { width: 112px; height: 112px; }
+    </style>
+  </head>
+  <body>
+    <svg viewBox="0 0 100 100" fill="none" stroke="#f2f0ea" stroke-width="10"
+         stroke-linecap="butt" stroke-linejoin="miter">
+      <path d="M 7 93 L 87 13" />
+      <path d="M 14 8 L 92 8 L 92 88" />
+    </svg>
+  </body>
+</html>
