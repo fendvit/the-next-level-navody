@@ -1,9 +1,9 @@
 import './style.css'
 import library from '../products.json'
 
-/* The library lives in products.json at the repo root so the MCP connector
-   (api/mcp/[...token].js) can append to it without touching this file. The
-   card numbers are just the position in that list. */
+/* The library lives in products.json at the repo root so a guide can be added
+   without touching this file. The card numbers are just the position in that
+   list, so inserting one renumbers the rest by itself. */
 const products = library.map((product, index) => ({
   ...product,
   number: String(index + 1).padStart(2, '0')
