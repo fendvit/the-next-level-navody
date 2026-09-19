@@ -21,6 +21,14 @@ const categories = ['VŠE', ...new Set(products.map((p) => p.category))]
 
 const titleCase = (value) => value.charAt(0) + value.slice(1).toLowerCase()
 
+/* Everything out of products.json is interpolated into innerHTML below, and
+   products.json is no longer only hand-written — the MCP connector commits to
+   it too. So every field gets escaped on the way in: without this a title like
+   `<img src=x onerror=...>` would run script on the domain the Instagram bio
+   points at, which is a much worse failure than a badly worded guide. */
+const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }
+const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ESCAPES[char])
+
 const guideCount = (count) =>
   count === 1 ? '1 návod' : count < 5 ? `${count} návody` : `${count} návodů`
 
@@ -73,7 +81,7 @@ document.querySelector('#app').innerHTML = `
           <h1 class="reveal">Všechno, co jsem kdy natočil, ${highlight('na jednom místě', '.')}</h1>
           <p class="lede reveal">Čau čau, doufám, že se máš naprosto skvěle! Tady najdeš kompletní knihovnu všech mých rad a návodů, které jsem na Instagramu postoval a vytvářel. Věřím, že pomůžou i tobě.</p>
           <div class="hero-meta reveal">
-            ${categories.slice(1).map((c) => `<span>${titleCase(c)}</span>`).join('<span>·</span>')}
+            ${categories.slice(1).map((c) => `<span>${escapeHtml(titleCase(c))}</span>`).join('<span>·</span>')}
           </div>
         </div>
 
@@ -100,7 +108,7 @@ document.querySelector('#app').innerHTML = `
 
         <div class="filters" id="filters">
           ${categories.map((c, i) => `
-            <button class="pill filter" type="button" data-category="${c}" aria-pressed="${i === 0}">${c}</button>
+            <button class="pill filter" type="button" data-category="${escapeHtml(c)}" aria-pressed="${i === 0}">${escapeHtml(c)}</button>
           `).join('')}
         </div>
 
@@ -162,14 +170,14 @@ const render = (category) => {
      screen reader while the whole card remains one hit area. */
   grid.innerHTML = visible.map((product) => `
     <li class="cell">
-      <a class="card cell-link" href="${product.link}" target="_blank" rel="noopener noreferrer">
+      <a class="card cell-link" href="${escapeHtml(product.link)}" target="_blank" rel="noopener noreferrer">
         <div class="card-panel">
           <span class="cell-n">${product.number}</span>
-          <span class="cell-cat">${product.category}</span>
+          <span class="cell-cat">${escapeHtml(product.category)}</span>
         </div>
         <div class="cell-body">
-          <h3 class="cell-title">${product.title}</h3>
-          <p class="cell-text">${product.description}</p>
+          <h3 class="cell-title">${escapeHtml(product.title)}</h3>
+          <p class="cell-text">${escapeHtml(product.description)}</p>
           <span class="cell-cta">Otevřít →</span>
         </div>
       </a>
