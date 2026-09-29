@@ -15,7 +15,9 @@ const INSTAGRAM = 'https://instagram.com/vitekfendrych'
    "Návody" link back here. Same-brand, so no target="_blank" — sending
    someone to a new tab to reach your own other page is a dead end with extra
    steps. */
-const NEWSLETTER = 'https://www.tnextlvl.com/'
+/* ?z=navody tags every signup that comes through here — tnextlvl.com writes
+   it into the Ecomail source, so the list can tell guide readers apart. */
+const NEWSLETTER = 'https://www.tnextlvl.com/?z=navody'
 
 const categories = ['VŠE', ...new Set(products.map((p) => p.category))]
 
@@ -92,7 +94,7 @@ document.querySelector('#app').innerHTML = `
             <p class="card-big">${guideCount(products.length)}, které tě posunou dál.</p>
             <p class="card-note">Klikni na kterýkoliv návod a otevře se ti rovnou celý. Žádný e-mail, žádný háček.</p>
             <a class="btn" href="#navody">Projít knihovnu</a>
-            <p class="fineprint">Nové návody přidávám průběžně. Sleduj <a href="${INSTAGRAM}" target="_blank" rel="noopener noreferrer">Instagram</a> nebo si nech posílat <a href="${NEWSLETTER}">newsletter</a>, ať ti žádný neunikne.</p>
+            <p class="fineprint">Nové návody přidávám průběžně a ukazuju je v reelech na <a href="${INSTAGRAM}" target="_blank" rel="noopener noreferrer">Instagramu</a>, tak ho sleduj, ať ti žádný neunikne.</p>
           </div>
         </aside>
       </div>
@@ -122,13 +124,17 @@ document.querySelector('#app').innerHTML = `
         <div class="newsletter-panel">
           <div class="newsletter-copy">
             <span class="eyebrow reveal">Newsletter</span>
-            <h2 class="reveal d1">Ať ti ${highlight('nic neuteče', '.')}</h2>
-            <p class="lede reveal d2">Kromě návodů posílám jednou týdně e-mail THE NEXT LEVEL: co mi funguje, co jsem podělal, reálná čísla a zákulisí. Nové návody tam hlásím jako první.</p>
+            <!-- 2026-09-28: the old lede was Pavel Sedláček's signup list
+                 reworded and promised things no issue carries (numbers, new
+                 guides announced first). Same fix as tnextlvl.com — see
+                 AI-OS\output\tnextlvl-conversion-audit-2026-09-28.md. -->
+            <h2 class="reveal d1">Každou neděli ${highlight('jeden mail', '.')}</h2>
+            <p class="lede reveal d2">Kromě návodů ti každou neděli ráno napíšu, co jsem dřív dělal špatně a jak to dělám dneska. V každým mailu je jedna věc, co se mi fakt stala, a na konci se tě zeptám, jak to máš ty.</p>
           </div>
 
           <div class="newsletter-action reveal d2">
-            <a class="btn" href="${NEWSLETTER}">Odebírat newsletter</a>
-            <p class="fineprint">Zdarma · Odhlášení jedním klikem</p>
+            <a class="btn" href="${NEWSLETTER}">Odebírat nedělní mail</a>
+            <p class="fineprint">Zdarma · V každým mailu se dá odhlásit</p>
           </div>
         </div>
       </div>
