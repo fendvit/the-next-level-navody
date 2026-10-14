@@ -1,157 +1,211 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   THE NEXT LEVEL — brand design system (v3 "dark")
+   THE NEXT LEVEL — brand design system (v4 "Sunday edition")
    ═══════════════════════════════════════════════════════════════════════════
 
-   CANONICAL COPY. This file is the source of truth for the brand's visual
-   language. A byte-identical mirror lives at:
+   CANONICAL COPY. A mirror of this file lives at
 
        fedr_calis_navody/src/design-system.css   (navody.tnextlvl.com)
 
-   The two sites are separate repos with separate Vercel deploys, so the file
-   is duplicated rather than imported. When you change one, copy it to the
-   other in the same commit — a drift here is the two sites quietly ceasing to
-   look like one brand, and nothing will throw an error to tell you.
+   Keep the two byte-identical: copy this file over after every change
+   here. Last re-copied 2026-10-14 with the navody v4.1 redesign (navody
+   branch design/v4-1), which rebuilt that site's page layer on this
+   system. Merge the two together. The v3 class names that still make sense
+   (.btn, .field, .card, .eyebrow, .lede, .hl, .reveal, .container, .section,
+   .fineprint, .wordmark, .sr-only) are kept so that copy is mostly a drop-in;
+   the v3 effects (.beam, .glass, .pill, the cursor bloom) are gone on purpose.
 
-   Reasoning behind every value: AI-OS\context\brand\visual-identity-v2.md.
-   Prototype it was extracted from: the_next_level\design\v3-dark\index.html.
+   Where it comes from:
+   · The Claude Design System artifact "The Next Level" (2026-10-14): light
+     paper, one calm denim blue, Inter Tight in sentence case at real display
+     sizes, small radii, solid cards, no pills / glass / gradients, the
+     three-stroke mark. Token NAMES and VALUES below are that artifact's.
+   · theelement.cz, for principles rather than looks: very large tight display
+     type with one accent phrase and an ink full stop; hairline-ruled numbered
+     indexes; small mono labels for facts; a serif-italic second voice;
+     expo-out easing; generous, fluid section rhythm.
 
-   What belongs in here: tokens, type scale, and primitives both sites use
-   (surfaces, buttons, fields, cards, the marker sweep, glass, reveal).
-   What does NOT: anything page-specific. The hero, the runner, the globe and
-   the guide grid live in each site's own stylesheet.
+   The page is a Sunday paper. Two voices, each with one job:
+   · Inter Tight — everything that is the page talking, facts included
+     (small, medium weight, tabular figures — the .mono / .eyebrow labels).
+   · Instrument Serif italic — only Vít's own words: quotes from sent mails,
+     his signature, the line on the hero photo. Never decoration.
+   v4 had a third, JetBrains Mono, for facts; v4.1 dropped it at Vít's call
+   (2026-10-14: "this kind of font I don't really like").
+
+   What belongs here: tokens, type, and primitives both sites can use. What
+   does not: anything page-specific (hero, issue index, race cards) — that is
+   in each site's own stylesheet.
    ─────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* ── Ground and surfaces ────────────────────────────────────────────────
-     Near-black, not pure black — #000 kills the glow that the whole system
-     leans on. */
-  --bg: #08090a;
-  --bg-soft: #0d0e11;
-  --card: #121317;
-  --card-hi: #16181c;
-  --line: #22242a;
-  --line-hi: #2e3138;
-
-  /* ── Text ──────────────────────────────────────────────────────────────
-     Bone, carried over from the cream tee in the apparel collection. Pure
-     white reads cheap against this ground. */
-  --text: #f2f0ea;
-  --muted: #8e8f89;
-  --dim: #63645f;
-
-  /* ── Accent ────────────────────────────────────────────────────────────
-     Deep blue with orange as the second, warm accent. Vít's call,
-     2026-09-18: all-dark-and-blue alone read "vesmírně ale zároveň jako
-     pozvánka na pohřeb". It is blue AGAINST the orange that kills the grey,
-     so never ship one without the other. Blue is also the colour of the top
-     he races in; the orange is on his shoes. */
-  --accent: #2f56c8;
-  --accent-hi: #5b86ff;
-  --warm: #ff6a2b;
-
-  --glow: rgba(91, 134, 255, 0.5);      /* tight halo on small marks */
-  --glow-amb: rgba(47, 86, 200, 0.26);  /* the big ambient washes */
-  --glow-ring: rgba(91, 134, 255, 0.18);/* focus ring */
-  --bloom: rgba(91, 134, 255, 0.14);    /* cursor bloom inside cards */
+  /* ── Colour (artifact tokens, light theme) ──────────────────────────────
+     One hue. Everything that is not `--brand` is a neutral. */
+  --paper: #f5f6f8;         /* page ground */
+  --paper-raised: #ffffff;  /* cards, inputs, anything on paper */
+  --paper-sunk: #eaecf0;    /* recessed bands, footer */
+  --ink: #10131a;           /* text, the mark, ink bands */
+  --ink-muted: #505968;     /* secondary copy — 6.6:1 on paper */
+  --line: #d9dce3;          /* decorative hairlines only */
+  --line-strong: #6f7787;   /* control edges — holds 3:1 */
+  --brand: #2f4f9e;         /* the one colour — 7.4:1 on paper */
+  --on-brand: #ffffff;
+  --brand-soft: #e1e6f2;
+  --danger: #b3182f;
+  --success: #0a6b49;
+  --focus: #10131a;
 
   /* ── Type ──────────────────────────────────────────────────────────────
-     Headings: Arial / Helvetica Bold, ALL CAPS. Vít's call, 2026-09-18 —
-     Inter was proposed for headings and rejected. Inter stays on body and UI
-     text, where it renders small sizes better. */
-  --font-display: Arial, Helvetica, "Helvetica Neue", sans-serif;
-  /* The fallback inside var() is load-bearing, not belt-and-braces. The
-     newsletter site defines --font-inter via next/font; the navody site loads
-     Inter from Google Fonts and never defines that variable. A bare
-     var(--font-inter) with no fallback makes the whole font-family
-     declaration invalid at computed-value time — the rule does not fall
-     through to the next family in the list, it drops entirely and the page
-     renders in the browser default serif. */
-  --font-body: var(--font-inter, Inter), Helvetica, Arial, sans-serif;
+     The fallback inside each var() is load-bearing: the newsletter site
+     defines the variables via next/font, the navody site does not, and a
+     bare var() with no fallback invalidates the whole font-family
+     declaration (the text drops to the browser's default serif). */
+  --font-sans: var(--font-inter-tight, "Inter Tight"), "Inter", system-ui,
+    -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: var(--font-sans);
+  --font-serif: var(--font-instrument, "Instrument Serif"), Georgia,
+    "Times New Roman", serif;
+  /* No mono face since v4.1 (Vít, 2026-10-14: "this kind of font I don't
+     really like"). The token stays so every .mono / .eyebrow keeps working;
+     it now points at the sans, and labels are set apart by size and
+     colour instead of by the face. */
+  --font-mono: var(--font-sans);
 
-  /* ── Radii ─────────────────────────────────────────────────────────────
-     Vít, 2026-09-18: "I dont like the 0 px box radius that squeares that 1px
-     lines." Radii go up across the board and the hairline border stops being
-     how an edge gets drawn — see --edge / --lift below. */
-  --radius: 22px;
-  --radius-sm: 15px;
-  --radius-lg: 30px;
+  /* Fluid scale. The max of each step is the artifact's value; the min is
+     where the step still reads as itself on a 360px phone. */
+  --fs-display-xl: clamp(52px, 10.4vw, 144px);
+  --fs-display-lg: clamp(40px, 7vw, 104px);
+  --fs-display-md: clamp(34px, 5vw, 72px);
+  --fs-heading: clamp(28px, 3.3vw, 48px);
+  --fs-subheading: clamp(21px, 2vw, 28px);
+  --fs-lead: clamp(18px, 1.55vw, 22px);
+  --fs-body: 17px;
+  --fs-small: 14px;
+  --fs-label: 13px;
+  --fs-mono: 13px;
 
-  /* ── Surfaces instead of outlines ──────────────────────────────────────
-     Separation comes from a change of tone plus a one-sided highlight along
-     the top edge, the way light actually falls on a raised panel. The
-     remaining border is barely-there and only stops a card dissolving into
-     the page on cheap screens. */
-  --edge: rgba(255, 255, 255, 0.055);
-  --lift: inset 0 1px 0 rgba(255, 255, 255, 0.055), 0 1px 2px rgba(0, 0, 0, 0.5);
-  --lift-hi: inset 0 1px 0 rgba(255, 255, 255, 0.09),
-    0 18px 40px -22px rgba(0, 0, 0, 0.9);
+  /* ── Space (artifact scale) ────────────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 192px;
 
-  /* Everything a light section has to flip lives here rather than being
-     hardcoded, so `.light` can switch the whole page half by overriding
-     variables instead of restating every rule. */
-  --field-bg: rgba(255, 255, 255, 0.04);
-  --field-edge: rgba(255, 255, 255, 0.1);
-  --rule: rgba(255, 255, 255, 0.09);
-  --stroke: rgba(255, 255, 255, 0.16);
+  /* One fluid value instead of a breakpoint ladder. 96px floor on phones
+     rather than the artifact's 128: this is a conversion page that people
+     reach from an Instagram bio, and every screen of air is a screen of
+     scrolling before the second form. */
+  --section-y: clamp(96px, 12vw, 176px);
+
+  /* ── Radii (artifact) — small and square-ish. Nothing is a pill. ────── */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  /* ── Elevation — two shadows, one direction, nothing else ─────────────── */
+  --shadow-card: 0 20px 40px -24px rgba(16, 19, 26, 0.32);
+  --shadow-lift: 0 28px 52px -26px rgba(16, 19, 26, 0.4);
 
   /* ── Layout ────────────────────────────────────────────────────────────── */
-  --container: 1140px;
-  --gutter: 22px;
+  --container: 1320px;
+  --gutter: clamp(20px, 4vw, 40px);
+  --measure: 36rem;
+  --header-h: 68px;
   --dock: 0px;
 
-  /* Legacy aliases. The privacy-policy and /potvrzeno stylesheets were
-     written against the old token names; keeping them mapped here means the
-     rebrand did not have to touch pages it had no reason to touch. */
-  --line-soft: var(--line);
-  --muted-dim: var(--muted);
-  --muted-dimmer: var(--dim);
-  --font-mono: var(--font-body);
+  /* ── Motion ────────────────────────────────────────────────────────────
+     Expo-out for anything arriving (it settles instead of stopping);
+     ease-in-out only for things that open and close in place. 240ms is the
+     artifact's hover/focus value; 600ms its section fade. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur: 240ms;
+  --dur-reveal: 600ms;
+  --dur-slow: 1100ms;
+
+  /* ── Legacy aliases ────────────────────────────────────────────────────
+     v3 names, mapped onto v4 tokens, so any stylesheet still written
+     against them (the navody site until it is re-checked) renders in the
+     new palette rather than falling back to nothing. Don't use these in new
+     code. */
+  --bg: var(--paper);
+  --bg-soft: var(--paper-sunk);
+  --card: var(--paper-raised);
+  --card-hi: var(--paper-raised);
+  --text: var(--ink);
+  --muted: var(--ink-muted);
+  --dim: var(--ink-muted);
+  --accent: var(--brand);
+  --accent-hi: var(--brand);
+  --edge: var(--line);
+  --rule: var(--line);
+  --radius: var(--radius-lg);
+  --font-body: var(--font-sans);
 }
 
-@media (min-width: 900px) {
-  :root {
-    --gutter: 44px;
-  }
+/* ── INK BANDS ─────────────────────────────────────────────────────────────
+   The artifact's dark theme, applied to one section at a time. Like v3's
+   `.light`, it only redefines variables: every primitive below reads its
+   colours from them, so a band restates no component. The page alternates
+   paper and ink the way the apparel puts the jet tee next to the cream one —
+   it is the rhythm Vít asked for in v3, kept. */
+.ink {
+  --paper: #0e1116;
+  --paper-raised: #161a21;
+  --paper-sunk: #0a0c10;
+  --ink: #eef0f4;
+  --ink-muted: #9aa3b2;
+  --line: #262c36;
+  --line-strong: #6b7586;
+  /* The same denim as on paper (Vít, 2026-10-14: no light purple in the
+     dark part, "just the normal blue"). As a fill it holds 8.9:1 with
+     white text. As TEXT on ink it would be 2.5:1, so text accents inside
+     an ink band are set in --ink instead (see `.ink .hl` below and
+     `.about-h .voice` in globals.css). */
+  --brand: #2f4f9e;
+  --on-brand: #ffffff;
+  --brand-soft: #1c2336;
+  --danger: #ff8a9b;
+  --success: #4fd6a0;
+  --focus: #eef0f4;
+  --shadow-card: 0 20px 40px -24px rgba(0, 0, 0, 0.7);
+  --shadow-lift: 0 28px 52px -26px rgba(0, 0, 0, 0.8);
+
+  background: var(--paper);
+  color: var(--ink);
 }
 
-/* ── LIGHT SECTIONS ────────────────────────────────────────────────────────
-   The bone half of the page. Vít, 2026-09-18: "tedka je to takové celé černé
-   a vesmírné." Rather than lightening everything, the page alternates — which
-   is what the collection itself does, the jet black tee next to the cream one.
+/* Back to paper inside an ink band, or a no-op on the default ground. Kept
+   under its v3 name so the navody markup keeps meaning something. */
+.light,
+.paper {
+  --paper: #f5f6f8;
+  --paper-raised: #ffffff;
+  --paper-sunk: #eaecf0;
+  --ink: #10131a;
+  --ink-muted: #505968;
+  --line: #d9dce3;
+  --line-strong: #6f7787;
+  --brand: #2f4f9e;
+  --on-brand: #ffffff;
+  --brand-soft: #e1e6f2;
+  --danger: #b3182f;
+  --success: #0a6b49;
+  --focus: #10131a;
 
-   Nothing below restates a component. Every rule in this file reads its
-   colours from variables, so a section only has to redefine the variables.
-   Buttons invert for free: `.btn` is background:var(--text) on
-   color:var(--bg), and both of those just swapped. */
-.light {
-  --bg: #edeae3;
-  --bg-soft: #e7e4dc;
-  --card: #f5f3ee;
-  --card-hi: #faf9f5;
-  --text: #17181a;
-  --muted: #65665f;
-  --dim: #8e8f87;
-  --accent: #2a49a8;
-  --accent-hi: #2f56c8;
+  background: var(--paper);
+  color: var(--ink);
+}
 
-  /* On bone every one of these has to be LIGHTER in feel, not merely darker
-     in value. A dark radial on cream does not read as a glow, it reads as a
-     stain — which is exactly what the stat cards looked like on mobile. */
-  --glow: rgba(47, 86, 200, 0.34);
-  --glow-amb: rgba(47, 86, 200, 0.1);
-  --glow-ring: rgba(47, 86, 200, 0.16);
-  --bloom: rgba(47, 86, 200, 0.09);
-
-  --edge: rgba(0, 0, 0, 0.09);
-  --lift: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 2px rgba(0, 0, 0, 0.05);
-  --lift-hi: inset 0 1px 0 #fff, 0 18px 40px -22px rgba(0, 0, 0, 0.22);
-  --field-bg: #fff;
-  --field-edge: rgba(0, 0, 0, 0.14);
-  --rule: rgba(0, 0, 0, 0.13);
-  --stroke: rgba(0, 0, 0, 0.17);
-
-  background: var(--bg);
-  color: var(--text);
+.sunk {
+  background: var(--paper-sunk);
 }
 
 /* ── RESET ────────────────────────────────────────────────────────────────── */
@@ -166,23 +220,32 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Anchored jumps (#prihlaseni, #maily) land below the sticky header
+     instead of under it. */
+  scroll-padding-top: calc(var(--header-h) + 12px);
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.65;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  letter-spacing: -0.005em;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01" 0, "cv11" 1;
   padding-bottom: var(--dock);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
+/* height:auto so the width/height attributes (there to reserve space and
+   stop layout shift) only set the ratio, never a fixed pixel height. */
 img {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 a {
@@ -196,9 +259,18 @@ input {
   color: inherit;
 }
 
+/* Solid 3px ring, 3px off the element, in --focus — it always lands on the
+   surface around a control, so it holds contrast on paper, raised paper,
+   brand fills and ink bands alike. Never removed, only restyled. */
 :focus-visible {
-  outline: 2px solid var(--accent-hi);
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--brand);
+  color: var(--on-brand);
 }
 
 .container {
@@ -220,452 +292,481 @@ input {
   border: 0;
 }
 
-/* Film grain over the whole page. Flat dark surfaces band badly on phone
-   screens; a little noise hides it and keeps the dark feeling like a material
-   rather than a colour value. */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.028;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* ── TYPE ─────────────────────────────────────────────────────────────────
+   Sentence case everywhere — the v3 all-caps Arial is gone (artifact,
+   "Headlines, buttons, tags and labels are never uppercase"). Tracking
+   tightens as size grows; line-height closes as size grows. Czech accents
+   decide the floor: below ~0.96 an Ž or Ř at a line start hits the
+   descenders of the line above, so nothing here goes under that. */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--ink);
+  text-wrap: balance;
 }
 
-/* ── TYPE ─────────────────────────────────────────────────────────────────
-   Arial/Helvetica Bold, all caps. Three values move with the caps, and all
-   three are forced by the letterforms rather than by taste:
-
-   · Tracking back to roughly neutral. The −0.04em that made lowercase Inter
-     look solid collides capitals, and Czech makes it worse — Í, Ě, Ř and Ů
-     are wide and sit right at the edge of their box.
-   · Line-height UP, not down. Caps have no descenders so the instinct is to
-     close the lines; do that and the accent on Í in one line hits the
-     baseline of the line above it.
-   · Size DOWN. Capitals fill their whole box, so the same value reads
-     noticeably larger than lowercase — h1 caps at 45px reads like ~55px. */
 h1 {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  font-size: clamp(24px, 4vw, 45px);
-  line-height: 1.16;
-  letter-spacing: -0.01em;
-  font-weight: 700;
+  font-size: var(--fs-display-md);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
 }
 
 h2 {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  font-size: clamp(20px, 2.9vw, 33px);
-  line-height: 1.18;
-  letter-spacing: -0.005em;
-  font-weight: 700;
+  font-size: var(--fs-display-lg);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
 }
 
 h3 {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  font-size: 14px;
+  font-size: var(--fs-subheading);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--fs-label);
   line-height: 1.3;
-  letter-spacing: 0.015em;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 p {
-  color: var(--muted);
+  color: var(--ink-muted);
+  text-wrap: pretty;
 }
 
 .lede {
-  font-size: 16px;
-  line-height: 1.7;
-  max-width: 44ch;
+  font-size: var(--fs-lead);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  max-width: var(--measure);
+  color: var(--ink-muted);
 }
 
-/* The wide-tracked uppercase from the garments survives only in small labels,
-   which is where the shirts use it too. */
+/* Small label for facts: dates, issue numbers, durations. Sentence case,
+   as the artifact rules for labels. Since v4.1 it is the sans, not a mono
+   face (Vít's call, 2026-10-14) — medium weight, muted colour and
+   tabular figures are what set it apart. The class keeps its old name. */
+.eyebrow,
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
+  gap: 10px;
 }
 
+/* A short rule before the label, the way a printed section slug sits. */
 .eyebrow::before {
   content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent-hi);
-  box-shadow: 0 0 10px var(--glow);
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+/* Vít's own words. Instrument Serif has a single weight, so emphasis inside
+   it comes from size, never from bold. */
+.voice {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  color: var(--ink);
 }
 
 .wordmark {
-  font-size: 11px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* ── MARKER SWEEP ─────────────────────────────────────────────────────────
-   The hand-drawn highlight, path taken verbatim from the original
-   Highlight.tsx: a slightly irregular rectangle rotated 0.7deg and stretched
-   over the phrase with preserveAspectRatio="none".
-
-   Colours come from the tokens, so it inverts by itself: bone sweep with ink
-   letters on the dark half, ink sweep with bone letters on a light one. */
-.hl {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-  color: var(--bg);
-  isolation: isolate; /* keeps the z-index:-1 sweep above the section background */
-}
-
-.hl svg {
-  position: absolute;
-  left: -9px;
-  top: -5px;
-  z-index: -1;
-  max-width: none;
-  width: calc(100% + 28px);
-  height: calc(100% + 12px);
-  transform: rotate(-0.7deg);
-}
-
-.hl svg path {
-  fill: var(--text);
-}
-
-/* Blur-text splits a phrase into word spans; they must not re-inherit the
-   headline colour or the letters vanish into the sweep. */
-h1 .hl span,
-h2 .hl span {
-  color: var(--bg);
-}
-
-/* Punctuation that follows the sweep needs its own positioned box. The sweep
-   overhangs the phrase by ~19px on the right and .hl is a stacking context,
-   so it paints over whatever text node comes next — a bare "." after the
-   highlight simply disappears under it. Giving the tail `position:relative`
-   puts it after .hl in paint order and lifts it back on top. */
-.hl-tail {
-  position: relative;
-}
-
-/* Below 700px the phrase has to be allowed to break — nowrap at that width
-   forces horizontal overflow. */
-@media (max-width: 700px) {
-  .hl {
-    white-space: normal;
-  }
-
-  .hl svg {
-    left: -5px;
-    width: calc(100% + 14px);
-  }
-}
-
-/* ── PILLS & BUTTONS ──────────────────────────────────────────────────────── */
-.pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 15px;
-  border-radius: 999px;
-  background: var(--card);
-  border: 1px solid var(--edge);
-  box-shadow: var(--lift);
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--muted);
+  gap: 0.42em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--ink);
 }
 
+/* The mark: three strokes of equal length — a diagonal shaft and the top
+   and right edges of a box, meeting top-right. An arrow going up and out.
+   Butt caps and mitre joins; rounded ends turn it into a generic icon. */
+.mark-svg {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 6;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+/* UI arrow: two strokes in currentColor, never a font glyph. */
+.arrow {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+/* ── EMPHASIS ─────────────────────────────────────────────────────────────
+   The phrase marked ⟦ ⟧ in lib/copy.ts. v3 drew a marker sweep behind it;
+   v4 sets it in --brand, and punctuation that follows stays ink — "Další
+   email posílám v neděli ráno." with the full stop in ink is what closes the
+   line. One phrase per headline, at most. */
+.hl {
+  color: var(--brand);
+  font-style: normal;
+}
+
+.hl-tail {
+  color: var(--ink);
+}
+
+/* Denim text on an ink band fails contrast (2.5:1); there the accent
+   phrase goes white and keeps its emphasis from the line around it. */
+.ink .hl,
+.ink .link {
+  color: var(--ink);
+}
+
+/* ── BUTTONS ──────────────────────────────────────────────────────────────
+   radius-md, 52px tall, verb-first label, a drawn arrow for forward actions.
+   Hover rises 2px and lifts the shadow; the arrow nudges forward. */
 .btn {
+  --btn-bg: var(--brand);
+  --btn-fg: var(--on-brand);
+  --btn-edge: transparent;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 46px;
-  padding: 0 20px;
-  border-radius: 999px;
-  background: var(--text);
-  color: var(--bg);
-  border: 0;
+  gap: var(--space-3);
+  min-height: 52px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--btn-edge);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
   cursor: pointer;
-  font-size: 13px;
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.1;
   letter-spacing: -0.01em;
-  transition: transform 0.18s ease, box-shadow 0.25s ease, background 0.2s ease;
+  text-align: center;
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 26px rgba(242, 240, 234, 0.14);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+}
+
+.btn:hover .arrow {
+  transform: translateX(3px);
 }
 
 .btn:active {
   transform: translateY(0);
+  box-shadow: none;
+  transition-duration: var(--dur-fast);
 }
 
-.btn:disabled {
-  opacity: 0.55;
-  cursor: default;
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-.btn.ghost {
-  background: var(--card);
-  color: var(--text);
-  border: 1px solid var(--edge);
-  box-shadow: var(--lift);
+/* Quieter second action: ink outline. */
+.btn.ghost,
+.btn.secondary {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-edge: var(--ink);
 }
 
-.btn.ghost:hover {
-  background: var(--card-hi);
-  box-shadow: none;
+.btn.ghost:hover,
+.btn.secondary:hover {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--paper);
+}
+
+/* Compact, for the header. */
+.btn.small {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  font-size: 14px;
+}
+
+/* Text link with the drawn arrow. */
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color var(--dur) var(--ease-out);
+}
+
+.link:hover {
+  text-decoration-color: currentColor;
+}
+
+.link:hover .arrow {
+  transform: translateX(3px);
 }
 
 /* ── FIELDS ───────────────────────────────────────────────────────────────
-   The one exception to "no drawn borders": on an input the border is an
-   affordance, not decoration. 52px target and 16px text so iOS does not zoom
-   the viewport on focus. */
-.field {
-  width: 100%;
-  height: 52px;
-  padding: 0 16px;
-  font-size: 16px;
-  color: var(--text);
-  background: var(--field-bg);
-  border: 1px solid var(--field-edge);
-  border-radius: 999px;
-  appearance: none;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.25s ease;
+   The one place a drawn edge is an affordance: 2px --line-strong, 56px tall,
+   17px text (16px is the floor before iOS Safari zooms the viewport on
+   focus and never zooms back). */
+.field-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
 }
 
+.field {
+  width: 100%;
+  height: 56px;
+  padding: 0 var(--space-4);
+  font-size: 17px;
+  color: var(--ink);
+  background: var(--paper-raised);
+  border: 2px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  appearance: none;
+  transition:
+    border-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+/* Full --ink-muted (6.6:1), not faded: the repo's legibility floor for
+   anything a visitor reads on the way to signing up. */
 .field::placeholder {
-  color: var(--dim);
+  color: var(--ink-muted);
+  opacity: 1;
+}
+
+.field:hover {
+  border-color: var(--ink);
 }
 
 .field:focus {
   outline: none;
-  border-color: var(--accent-hi);
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 0 4px var(--glow-ring);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 22%, transparent);
 }
 
-.light .field:focus {
-  background: #fff;
+.field:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.field[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.field:disabled {
+  opacity: 0.6;
 }
 
 .fineprint {
-  font-size: 11.5px;
-  line-height: 1.6;
-  color: var(--dim);
-  margin-top: 13px;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--ink-muted);
 }
 
 .fineprint a {
-  color: var(--muted);
+  color: var(--ink);
   text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-/* ── BORDER BEAM ──────────────────────────────────────────────────────────
-   A conic gradient rotating behind a card, with the card sitting 1px inside
-   so only the rim shows. Done this way rather than with @property so it also
-   runs on Safari.
-
-   Use it ONCE per page, on the thing you want looked at. A beam on every
-   surface is exactly the component-demo look this system exists to avoid. */
-.beam {
-  position: relative;
-  border-radius: var(--radius);
-  padding: 1px;
-  isolation: isolate;
-  overflow: hidden;
-}
-
-.beam::before {
-  content: "";
-  position: absolute;
-  inset: -140%;
-  z-index: -1;
-  /* Narrow arc on purpose — a wide one lights a whole edge at once and reads
-     as a glowing bar rather than something travelling round the rim. */
-  background: conic-gradient(
-    from 0deg,
-    transparent 0 86%,
-    var(--accent-hi) 92%,
-    #e9e7e0 95%,
-    transparent 98%
-  );
-  animation: beamspin 5s linear infinite;
-}
-
-@keyframes beamspin {
-  to {
-    transform: rotate(1turn);
-  }
-}
-
-.beam-inner {
-  position: relative;
-  border-radius: calc(var(--radius) - 1px);
-  background: linear-gradient(180deg, var(--card-hi), var(--card));
-  padding: 24px;
+  text-underline-offset: 3px;
 }
 
 /* ── CARDS ────────────────────────────────────────────────────────────────
-   Card inside a card — the reactbits.dev structure. The outer shell holds
-   only padding; the content sits on an inner panel with its own radius. The
-   edge you read is a change of tone between two surfaces, not a drawn line,
-   which is the whole point of the complaint about 1px boxes. */
+   Solid, radius-lg, one soft shadow. Variants by fill, never by glass. Lay
+   several out with .scatter, not in a row of equals. */
 .card {
   position: relative;
-  border-radius: var(--radius);
-  padding: 9px;
-  background: var(--card);
-  border: 1px solid var(--edge);
-  box-shadow: var(--lift);
-  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.3s ease;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--paper-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
 }
 
-.card-panel {
-  border-radius: calc(var(--radius) - 9px);
-  background: var(--bg-soft);
-  padding: 26px 20px;
-  min-height: 104px;
+.card.brand {
+  background: var(--brand);
+  color: var(--on-brand);
+  border-color: transparent;
+}
+
+.card.soft {
+  background: var(--brand-soft);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.card.brand p,
+.card.brand .mono {
+  color: inherit;
+}
+
+/* Cards thrown on a 12-column grid at different widths, offsets and up to
+   two slight tilts — the artifact's ScatterLayout. Children opt in with
+   .s1 … .s4. Stacks flat on phones. */
+.scatter {
   display: grid;
-  place-items: center;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-5);
+  align-items: start;
 }
 
-.card-panel .num {
-  font-family: var(--font-display);
-  font-size: 40px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--stroke);
+.scatter > * {
+  min-width: 0;
 }
 
-.card-body {
-  padding: 18px 15px 13px;
+/* The tilt is the `rotate` property, not `transform`, so it composes with
+   the reveal and hover transforms instead of being overwritten by them. */
+.s1 { grid-column: 1 / 6; }
+.s2 { grid-column: 7 / 12; margin-top: var(--space-9); rotate: 1.2deg; }
+.s3 { grid-column: 2 / 7; margin-top: var(--space-5); rotate: -1deg; }
+.s4 { grid-column: 8 / 13; margin-top: calc(var(--space-9) + var(--space-5)); }
+
+/* Only a card that is a link reacts to the pointer — lifting a card that
+   does nothing on click is a false affordance. */
+a.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
 }
 
-/* Cursor-aware highlight. The x/y custom properties are written by JS on
-   pointer move; on a touch device they simply never change and the card stays
-   flat, which is the correct behaviour there. */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  background: radial-gradient(
-    420px circle at var(--x, 50%) var(--y, 50%),
-    var(--bloom),
-    transparent 62%
-  );
-}
+@media (max-width: 760px) {
+  .scatter {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-.card:hover {
-  transform: translateY(-3px);
-  background: var(--card-hi);
-  box-shadow: var(--lift-hi);
-}
-
-.card:hover::before {
-  opacity: 1;
-}
-
-.card h3 {
-  margin: 0 0 8px;
-}
-
-.card p {
-  font-size: 13.5px;
-  line-height: 1.65;
+  .scatter > * {
+    grid-column: 1 !important;
+    margin-top: 0 !important;
+    rotate: none !important;
+  }
 }
 
 /* ── SECTIONS ─────────────────────────────────────────────────────────────── */
 .section {
-  padding-block: clamp(64px, 8vw, 110px);
+  padding-block: var(--section-y);
 }
 
 .section-head {
-  max-width: 560px;
-  margin-bottom: 38px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  align-items: flex-start;
+  display: grid;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
 }
 
-/* A rule that fades out at both ends instead of a hard line running edge to
-   edge — same job, none of the boxed-in feeling. */
-.rule-fade {
+/* A hairline that can draw itself in from the left as it reveals. */
+.rule {
   height: 1px;
   border: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--rule) 22%,
-    var(--rule) 78%,
-    transparent
-  );
-}
-
-/* ── GLASS ────────────────────────────────────────────────────────────────
-   Header and the mobile dock share one recipe. .88, not .62: over a bone
-   section that much transparency blends to a muddy grey-brown. Change them
-   together or the bug comes back on whichever one you missed. */
-.glass {
-  background: rgba(8, 9, 10, 0.88);
-  -webkit-backdrop-filter: saturate(170%) blur(14px);
-  backdrop-filter: saturate(170%) blur(14px);
+  background: var(--line);
+  transform-origin: left center;
 }
 
 /* ── MOTION ───────────────────────────────────────────────────────────────
-   Hidden only when JS is actually running, so a script failure cannot leave
-   half the page permanently invisible. */
+   Hidden only when JS is actually running (`.js` is set in the document
+   head before first paint), so a script failure cannot leave part of the
+   page invisible. Fade up 16px over 600ms, once, expo-out. */
 .js .reveal {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(16px);
 }
 
 .js .reveal.is-in {
   opacity: 1;
   transform: none;
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
 }
 
-.reveal.d1 { transition-delay: 0.07s; }
-.reveal.d2 { transition-delay: 0.14s; }
-.reveal.d3 { transition-delay: 0.21s; }
-.reveal.d4 { transition-delay: 0.28s; }
+.reveal.d1 { transition-delay: 80ms; }
+.reveal.d2 { transition-delay: 160ms; }
+.reveal.d3 { transition-delay: 240ms; }
+.reveal.d4 { transition-delay: 320ms; }
 
-/* blur-text: a headline resolves word by word. `backwards` means each word
-   drops back to its plain style when it lands, so no filter layer is left
-   hanging on the page. Animating `filter` on many elements at once is what
-   stranded text mid-transition in v2 — here it is a handful of spans, once,
-   and then it is over. */
+/* Load entrance for what is above the fold. Plain CSS animation, so it runs
+   on first paint whether or not JS ever hydrates — above the fold nothing
+   may wait on an observer, least of all the e-mail field (a slow Instagram
+   in-app browser can take seconds to hydrate). `backwards` holds the start
+   state only during the delay; afterwards the element is simply styled. */
+.rise {
+  animation: rise 800ms var(--ease-out) backwards;
+}
+
+.rise.d1 { animation-delay: 120ms; }
+.rise.d2 { animation-delay: 240ms; }
+.rise.d3 { animation-delay: 360ms; }
+.rise.d4 { animation-delay: 480ms; }
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* Headline resolve: each word rises a third of an em out of a soft blur, in
+   sequence, once. `backwards` drops the words back to their plain style
+   when they land, so no filter layer is left on the page. */
 .bt span {
   display: inline-block;
-  animation: btIn 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+  animation: btIn 900ms var(--ease-out) backwards;
 }
 
 @keyframes btIn {
   from {
     opacity: 0;
-    filter: blur(11px);
-    transform: translateY(9px);
+    filter: blur(8px);
+    transform: translateY(0.32em);
   }
   to {
     opacity: 1;
@@ -674,7 +775,39 @@ h2 .hl span {
   }
 }
 
+/* Cross-document page transitions. Every page change on the site is a full
+   navigation, so the browser can cross-fade between them with no JS at all;
+   browsers without the API navigate exactly as before. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: vtOut 220ms var(--ease-in-out) both;
+}
+
+::view-transition-new(root) {
+  animation: vtIn 420ms var(--ease-out) both;
+}
+
+@keyframes vtOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vtIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .js .reveal,
   .js .reveal.is-in {
     opacity: 1;
@@ -683,11 +816,20 @@ h2 .hl span {
   }
 
   .bt span,
-  .beam::before {
+  .rise {
     animation: none;
   }
 
-  html {
-    scroll-behavior: auto;
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
   }
 }

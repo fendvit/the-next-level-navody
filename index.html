@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <!-- Matches --bg in the shared design system. -->
-    <meta name="theme-color" content="#08090a" />
+    <!-- Matches --paper in the shared design system. -->
+    <meta name="theme-color" content="#f5f6f8" />
 
     <title>Návody — THE NEXT LEVEL</title>
     <meta name="description" content="Kompletní knihovna návodů a rad od @vitekfendrych — mindset, trénink a knihy. Zdarma a bez registrace." />
@@ -47,14 +47,21 @@
     <meta name="twitter:image" content="https://navody.tnextlvl.com/og.png" />
 
     <!--
-      Inter on body and UI text only. Headings are Arial/Helvetica Bold in all
-      caps (Vít's call, 2026-09-18), which needs no webfont, so this is the
-      page's only font request. Archivo, Lexend Exa and JetBrains Mono went
-      with the previous design.
+      v4.1 (2026-10-14): the newsletter site's two faces. Inter Tight for
+      everything the page says, Instrument Serif italic only for Vít's own
+      words (the closing line). The design system's font tokens fall back to
+      these family names, which is what lets this site load them from Google
+      Fonts instead of next/font. Arial caps and Inter went with v3.
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400..700&family=Instrument+Serif:ital@1&display=swap&subset=latin-ext" rel="stylesheet">
+
+    <!--
+      `.js` before first paint. Every .reveal is hidden only under `.js`, so a
+      script failure leaves the page visible rather than blank.
+    -->
+    <script>document.documentElement.classList.add('js')</script>
   </head>
   <body>
     <div id="app"></div>
