@@ -1,25 +1,14 @@
 <!--
-  Favicon: the brand arrow on an accent tile. Byte for byte the same mark as
-  the newsletter site's app/icon.svg, so a tab reads as THE NEXT LEVEL
-  whichever half of the brand it belongs to. Change one, change both.
-
-  Replaced an open-book glyph on 2026-09-19: the header here carries the
-  arrow, so the tab and the page were showing two different logos.
-
-  No two hyphens in a row anywhere in this comment. XML forbids it, and an
-  SVG favicon that fails to parse still serves 200 while rendering nothing.
+  Favicon: the three-stroke mark on a brand tile. Mirror at
+  fedr_calis_navody/public/favicon.svg (re-copy after v4).
+  Two hard rules for this comment, both learned by breaking the build:
+  1. No two hyphens in a row. XML forbids it inside a comment.
+  2. Keep it short. Next sniffs only the first 1024 bytes for the root tag.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <rect width="100" height="100" rx="22" fill="#2f56c8" />
-  <g
-    transform="translate(14 14) scale(0.72)"
-    fill="none"
-    stroke="#f2f0ea"
-    stroke-width="11"
-    stroke-linecap="butt"
-    stroke-linejoin="miter"
-  >
-    <path d="M 7 93 L 87 13" />
-    <path d="M 14 8 L 92 8 L 92 88" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <rect width="48" height="48" rx="9" fill="#2f4f9e" />
+  <g transform="translate(5.5 6.5) scale(0.77)" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M8 8H40V40" />
+    <path d="M40 8L17.37 30.63" />
   </g>
 </svg>

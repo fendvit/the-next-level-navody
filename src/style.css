@@ -2,25 +2,24 @@
  * Page-level styles for navody.tnextlvl.com, on top of the shared brand
  * system.
  *
- * The tokens, type scale and primitives live in ./design-system.css. That
- * file is a MIRROR — the canonical copy is
- * the_next_level/app/design-system.css. Do not edit it here only: a change
- * that lands on one site and not the other is the two sites quietly ceasing
- * to look like one brand, and nothing throws an error to tell you.
+ * The tokens, type and primitives live in ./design-system.css. That file is
+ * a MIRROR — the canonical copy is the_next_level/app/design-system.css. Do
+ * not edit it here only: a change that lands on one site and not the other
+ * is the two sites quietly ceasing to look like one brand, and nothing
+ * throws an error to tell you.
  *
- * What is in this file is only what this site has and the newsletter site
- * does not: the hero, the filter row, the guide grid, and the two closing
- * bands.
- *
- * Deliberately absent: the runner, the swimmer and the cyclist. Vít's call,
- * 2026-09-18 — the easter eggs stay on the newsletter site. This page is a
- * library, and a figure crossing it competes with the one thing a visitor
- * came to do, which is find a guide and open it.
+ * v4.1 (2026-10-14): the v3 dark page (Arial caps, pills, glass, the beam,
+ * the marker sweep, the cursor bloom) is replaced by the newsletter site's
+ * v4.1 "Sunday edition" page language. Several blocks below are deliberate
+ * copies of the_next_level/app/globals.css (header, masthead, hero, facts
+ * strip, split head, footer) so both halves of the brand read as one paper.
+ * What is only here: the filter row, the guide index, the newsletter band
+ * and the closing line.
  */
 
 @import './design-system.css';
 
-/* Sticky footer: the library can be filtered down to a handful of cards, and
+/* Sticky footer: the library can be filtered down to a handful of rows, and
    without this the footer floats mid-screen when it is. */
 body {
   display: flex;
@@ -28,450 +27,679 @@ body {
   min-height: 100vh;
 }
 
-body > main {
+#app {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#app > main {
   flex: 1 0 auto;
 }
 
-/* ── HEADER ───────────────────────────────────────────────────────────────── */
+/* ── HEADER (copy of the newsletter site's) ─────────────────────────────── */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 60;
+  height: var(--header-h);
+  background: var(--paper);
+  transition: box-shadow var(--dur) var(--ease-out);
 }
 
-/* A rule that fades out at both ends rather than a hard line wall to wall.
-   The old `border-bottom: 1px solid var(--line)` is exactly the drawn-box
-   look this rebrand removes. */
-.site-header::after,
-.site-footer::before {
+html[data-scrolled] .site-header {
+  box-shadow: 0 1px 0 var(--line);
+}
+
+.nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.nav-brand {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  font-size: 19px;
+}
+
+.nav-brand .mark-svg {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.nav-brand:hover .mark-svg {
+  transform: translate(1px, -1px);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.nav-link::after {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
+  bottom: 10px;
   height: 1px;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--rule) 22%,
-    var(--rule) 78%,
-    transparent
-  );
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--dur) var(--ease-out);
 }
 
-.site-header::after {
-  bottom: 0;
+.nav-link:hover {
+  color: var(--ink);
 }
 
-.site-footer {
-  position: relative;
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
 }
 
-.site-footer::before {
-  top: 0;
-}
-
-.header-inner {
-  height: 62px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-}
-
-.lockup {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.lockup .mark {
-  width: 20px;
-  height: 20px;
-  flex: none;
-  color: var(--text);
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.nav a {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.nav a:hover {
-  color: var(--text);
-}
-
-.nav .btn {
-  height: 36px;
-  padding: 0 15px;
-  font-size: 12px;
-}
-
-/* The link to the newsletter site is the cross-link to the other half of the
-   brand and never collapses — the mirror of what "Návody" does over there.
-   The Instagram handle goes first because the footer repeats it, then the
-   wordmark, because the arrow still reads as the brand on its own. */
-@media (max-width: 560px) {
-  .nav .nav-handle {
+@media (max-width: 760px) {
+  .hide-sm {
     display: none;
   }
+
+  .nav-right {
+    gap: var(--space-4);
+  }
+}
+
+.nav-link,
+.nav-right .btn {
+  white-space: nowrap;
+}
+
+/* Below ~520px the wordmark, "Nedělní mail" and the button do not fit side
+   by side; the button goes (the hero has its own, above the fold) before
+   the cross-link to the other half of the brand does. */
+@media (max-width: 520px) {
+  .nav-right .btn {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-brand {
+    font-size: 17px;
+  }
+}
+
+/* ── HERO (masthead + 7/5 split, as on tnextlvl.com/newsletter) ──────────── */
+.hero {
+  padding-top: clamp(20px, 3vw, 40px);
+}
+
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+
+.masthead .mono {
+  white-space: nowrap;
+}
+
+.masthead-rule {
+  flex: 1;
+  min-width: 12px;
+  height: 1px;
+  background: var(--line);
 }
 
 @media (max-width: 400px) {
-  .nav {
-    gap: 12px;
+  .masthead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
   }
 
-  .lockup .wordmark {
+  .masthead-rule {
     display: none;
   }
 }
 
-/* ── HERO ─────────────────────────────────────────────────────────────────── */
-.hero-section {
-  position: relative;
-  overflow: hidden;
-}
-
-/* The ambient glow behind the top of the page. One wide radial, so there is
-   depth without a visible gradient edge. */
-.hero-section::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: -320px;
-  width: 1100px;
-  height: 720px;
-  transform: translateX(-50%);
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, var(--glow-amb), transparent 68%);
-  filter: blur(28px);
-}
-
-.hero {
-  position: relative;
-  z-index: 2;
+.hero-grid {
   display: grid;
-  gap: 40px;
-  padding-block: 52px 64px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  row-gap: var(--space-8);
+  padding-top: clamp(28px, 4vw, 56px);
+  align-items: start;
 }
 
-@media (min-width: 960px) {
-  .hero {
-    grid-template-columns: 1.08fr 0.92fr;
-    align-items: center;
-    gap: 60px;
-    padding-block: 84px 92px;
-  }
-}
-
-.hero-left {
+.hero-copy {
+  grid-column: 1 / 8;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 18px;
 }
 
-.hero-meta {
+.hero h1 {
+  font-size: clamp(36px, 5vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.042em;
+  max-width: 13em;
+}
+
+.hero .lede {
+  margin-top: clamp(20px, 2.4vw, 32px);
+}
+
+.hero-actions {
+  margin-top: clamp(24px, 3vw, 40px);
+}
+
+.hero .fineprint {
+  margin-top: var(--space-4);
+  max-width: 30rem;
+}
+
+/* The photo opens like a shutter, the picture settles from a slight zoom —
+   the newsletter hero's entrance, once, on load. */
+.hero-photo {
+  grid-column: 8 / 13;
+  margin: 0;
+}
+
+.photo-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--brand-soft);
+  animation: shutter var(--dur-slow) var(--ease-in-out) 120ms backwards;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: settle 1600ms var(--ease-out) 120ms backwards;
+}
+
+@keyframes shutter {
+  from {
+    clip-path: inset(0 46% 0 46% round var(--radius-lg));
+  }
+  to {
+    clip-path: inset(0 0 0 0 round var(--radius-lg));
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.12);
+  }
+}
+
+@media (max-width: 999px) {
+  .hero-copy,
+  .hero-photo {
+    grid-column: 1 / -1;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 7.4vw, 64px);
+  }
+
+  .hero-photo {
+    max-width: 560px;
+  }
+}
+
+/* ── FACTS STRIP ───────────────────────────────────────────────────────── */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: clamp(56px, 7vw, 104px);
+  border-top: 1px solid var(--ink);
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-5) 0;
+  border-left: 1px solid var(--line);
+}
+
+.fact:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.fact dd {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.fact b {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.5vw, 52px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.fact dd span {
+  font-size: 15px;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 760px) {
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fact {
+    padding: var(--space-4) var(--space-4) var(--space-5);
+    gap: var(--space-4);
+  }
+
+  .fact:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .fact:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* ── SECTION HEAD ──────────────────────────────────────────────────────── */
+.split-head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  row-gap: var(--space-5);
+  align-items: end;
+  margin-bottom: clamp(40px, 6vw, 88px);
+}
+
+.split-head > div {
+  grid-column: 1 / 8;
+  display: grid;
+  gap: var(--space-5);
+}
+
+.split-head > .lede {
+  grid-column: 9 / 13;
+}
+
+@media (max-width: 899px) {
+  .split-head > div,
+  .split-head > .lede {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── FILTERS ───────────────────────────────────────────────────────────────
+   Outline buttons at radius-md — v4 has no pills. The pressed one fills
+   ink, the way a ghost .btn does on hover. The count sits at the other end
+   of the same line and is announced when a filter changes it. */
+.filter-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-/* The hero card carries the page's one beam — the same rule as the signup
-   card on the newsletter site, one beam per page on the thing you want
-   looked at. Here that is the card saying how many guides exist and that
-   they cost nothing, which is the whole offer. */
-.hero-card .card-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-.hero-card .card-big {
-  margin-top: 12px;
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  font-size: 21px;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.005em;
-  color: var(--text);
-}
-
-.hero-card .card-note {
-  margin-top: 12px;
-  font-size: 13.5px;
-  line-height: 1.65;
-  color: var(--muted);
-}
-
-.hero-card .btn {
-  margin-top: 18px;
-  width: 100%;
-}
-
-/* ── GUIDES ───────────────────────────────────────────────────────────────── */
-.guides-inner {
-  padding-block: clamp(56px, 7vw, 96px);
-}
-
-.guides-head {
-  display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 22px;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
 }
 
-.guides-count {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-/* ── FILTERS ──────────────────────────────────────────────────────────────
-   Pills, not tabs. They reuse the shared .pill surface and only add the
-   pressed state, so a change to the surface recipe reaches them for free. */
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 26px;
+  gap: var(--space-2);
 }
 
 .filter {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: transparent;
   cursor: pointer;
-  font-size: 11.5px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  transition:
+    background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
 }
 
 .filter:hover {
-  background: var(--card-hi);
-  color: var(--text);
+  border-color: var(--ink);
 }
 
-/* The pressed pill inverts the same way .btn does — background:var(--text)
-   on color:var(--bg) — so it stays correct on both the dark and the bone half
-   without being restated. */
 .filter[aria-pressed='true'] {
-  background: var(--text);
-  color: var(--bg);
-  border-color: transparent;
-  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.35);
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
 }
 
-/* ── THE GRID ─────────────────────────────────────────────────────────────
-   Guide cards are the shared .card: the outer shell holds padding only and
-   the content sits on an inner panel with its own radius. auto-fill rather
-   than a fixed column count, because the library grows one card at a time
-   and a hard 3-up leaves a ragged last row at most widths. */
-.guides-grid {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+/* ── THE GUIDE INDEX ───────────────────────────────────────────────────────
+   The issue index's pattern: hairline-ruled rows, number and topic small
+   on the left, the title as a heading, the description under it, "Otevřít"
+   on the right. Two columns from 1000px, because the library is 25 rows and
+   growing; the rule above each row keeps the two columns reading as one
+   index rather than two lists. The row is padded and pulled out by the same
+   amount, so the hover wash has room while the text lines up. */
+.guides {
   list-style: none;
-}
-
-.cell {
-  display: flex;
-}
-
-/* The whole card is the link, so the hit area is the card rather than just
-   the title. It has to be the element carrying .card for the hover lift and
-   the cursor bloom to track the thing actually being pointed at. */
-.cell-link {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.cell-link .card-panel {
-  min-height: 78px;
-  padding: 16px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.cell-n {
-  font-family: var(--font-display);
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--stroke);
-}
-
-.cell-cat {
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-.cell-body {
-  padding: 16px 16px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
-.cell-title {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  font-size: 13.5px;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: 0.015em;
-  color: var(--text);
-}
-
-.cell-text {
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--muted);
-  flex: 1;
-}
-
-.cell-cta {
-  margin-top: 4px;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--dim);
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.cell-link:hover .cell-cta {
-  color: var(--text);
-  transform: translateX(3px);
-}
-
-/* ── NEWSLETTER BAND ──────────────────────────────────────────────────────
-   The dark panel between the two bone halves, built from the same recipe as
-   the manifesto panel on the newsletter site. */
-.newsletter-inner {
-  padding-block: clamp(56px, 7vw, 96px);
-}
-
-.newsletter-panel {
-  position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--edge);
-  box-shadow: var(--lift-hi);
-  background: linear-gradient(160deg, #101216, #0a0b0d 62%);
-  padding: clamp(30px, 5vw, 60px);
   display: grid;
-  gap: 28px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--space-7);
 }
 
-.newsletter-panel::before {
-  content: '';
-  position: absolute;
-  right: -180px;
-  top: -180px;
-  width: 520px;
-  height: 520px;
-  pointer-events: none;
-  background: radial-gradient(circle, var(--glow-amb), transparent 66%);
-  filter: blur(20px);
-}
-
-.newsletter-panel > * {
-  position: relative;
-}
-
-@media (min-width: 900px) {
-  .newsletter-panel {
-    grid-template-columns: 1.25fr 0.75fr;
-    gap: 48px;
+@media (min-width: 1000px) {
+  .guides {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.newsletter-copy {
+.guide {
+  --pad: clamp(0px, 1.4vw, 16px);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) max-content;
+  gap: var(--space-4);
+  align-items: baseline;
+  margin-inline: calc(var(--pad) * -1);
+  padding: var(--space-5) var(--pad);
+  border-radius: var(--radius-md);
+  transition: background-color var(--dur) var(--ease-out);
+}
+
+.guide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--pad);
+  right: var(--pad);
+  height: 1px;
+  background: var(--line);
+}
+
+.guide:hover {
+  background: var(--paper-raised);
+}
+
+.guide-meta {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
+  gap: var(--space-1);
+}
+
+.guide-meta span:first-child {
+  color: var(--ink);
+}
+
+.guide-title {
+  font-size: clamp(19px, 1.6vw, 23px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: color var(--dur) var(--ease-out);
+}
+
+.guide:hover .guide-title {
+  color: var(--brand);
+}
+
+.guide-text {
+  margin-top: var(--space-2);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.guide-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* Stretched over the whole row: the row is the tap target and the focus
+   ring frames the row, not just the word. */
+.guide-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+}
+
+.guide-link:focus-visible {
+  outline: none;
+}
+
+.guide-link:focus-visible::after {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.guide:hover .guide-link .arrow {
+  transform: translateX(4px);
+}
+
+/* Phones: one column, and no separate "Otevřít" line — the word goes to
+   screen readers only and the arrow sits top-right on the meta line, so a
+   row is number + topic, title, one line of description. 25 rows of the
+   desktop layout stacked were ~200px each (Vít, on the hub the same day:
+   cards "too big", only the first one visible). */
+@media (max-width: 640px) {
+  .guide {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+    padding-block: var(--space-4);
+  }
+
+  .guide-meta {
+    flex-direction: row;
+    gap: var(--space-3);
+    padding-right: 48px;
+  }
+
+  .guide-text {
+    margin-top: var(--space-1);
+    font-size: 15px;
+  }
+
+  .guide-link {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--pad);
+    min-height: 32px;
+    color: var(--brand);
+  }
+
+  .guide-link > span:first-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
+/* ── NEWSLETTER (the one ink band) ─────────────────────────────────────── */
+.newsletter-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  row-gap: var(--space-7);
+  align-items: end;
+}
+
+.newsletter-copy {
+  grid-column: 1 / 8;
+  display: grid;
+  gap: var(--space-5);
 }
 
 .newsletter-action {
+  grid-column: 9 / 13;
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (max-width: 899px) {
+  .newsletter-copy,
+  .newsletter-action {
+    grid-column: 1 / -1;
+  }
+
+  .newsletter-action {
+    max-width: 480px;
+  }
+}
+
+/* ── CLOSING ───────────────────────────────────────────────────────────── */
+.closing-inner {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.newsletter-action .btn {
-  width: 100%;
-}
-
-.newsletter-action .fineprint {
-  margin-top: 0;
-}
-
-/* ── CLOSING BAND ─────────────────────────────────────────────────────────── */
-.cta-inner {
-  padding-block: clamp(56px, 7vw, 92px);
+  align-items: center;
+  gap: var(--space-5);
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
 }
 
-.cta-fineprint {
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--dim);
+.closing-line {
+  max-width: 14em;
+  font-size: clamp(40px, 6.4vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
-/* ── FOOTER ───────────────────────────────────────────────────────────────── */
+/* ── FOOTER (copy of the newsletter site's) ────────────────────────────── */
 .site-footer {
-  padding-block: 28px;
+  padding-top: clamp(64px, 9vw, 128px);
+  padding-bottom: var(--space-6);
 }
 
-.footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: space-between;
+.foot-word {
+  display: inline-flex;
+  font-size: min(156px, calc((100vw - 2 * var(--gutter)) / 8.2));
+  line-height: 0.9;
+  color: var(--ink);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.foot-word .wordmark {
+  letter-spacing: -0.05em;
+  gap: 0.2em;
+}
+
+.foot-word .mark-svg {
+  width: 0.8em;
+  height: 0.8em;
+  stroke-width: 5;
+}
+
+.foot-word:hover {
+  color: var(--brand);
+}
+
+.foot-cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-7);
+  margin-top: clamp(48px, 7vw, 96px);
+  padding-block: var(--space-6) var(--space-8);
+  border-top: 1px solid var(--ink);
+}
+
+.foot-line {
+  font-size: var(--fs-lead);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  max-width: 18em;
+}
+
+.foot-cols h4 {
+  margin-bottom: var(--space-4);
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+
+.foot-cols ul {
+  list-style: none;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.foot-cols a,
+.foot-legal a {
+  display: inline-flex;
   align-items: center;
+  min-height: 40px;
+  transition: color var(--dur) var(--ease-out);
 }
 
-.footer-right {
+.foot-cols a {
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.foot-cols a:hover,
+.foot-legal a:hover {
+  color: var(--brand);
+}
+
+.foot-legal {
   display: flex;
-  gap: 18px;
   flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-6);
+  row-gap: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
 }
 
-.footer-inner a,
-.footer-credit {
-  font-size: 11.5px;
-  color: var(--dim);
+@media (max-width: 760px) {
+  .foot-cols {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+
+  .foot-line {
+    grid-column: 1 / -1;
+  }
 }
 
-.footer-inner a:hover {
-  color: var(--text);
+@media (prefers-reduced-motion: reduce) {
+  .photo-frame,
+  .photo-frame img {
+    animation: none;
+  }
 }
