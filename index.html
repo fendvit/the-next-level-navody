@@ -62,6 +62,15 @@
       script failure leaves the page visible rather than blank.
     -->
     <script>document.documentElement.classList.add('js')</script>
+
+    <!--
+      First-party measurement (reel-insights, docs/PLATFORM.md): page views, which
+      guide gets opened, outbound clicks. Cookieless: nothing is stored on the
+      visitor's device and the server keeps no IP, so no consent banner; the
+      newsletter site's privacy policy (section 6) describes it. data-site is a
+      public key, not a secret.
+    -->
+    <script defer src="https://vf-channel-insights.vercel.app/t.js" data-site="nav_39a1a11fbe"></script>
   </head>
   <body>
     <div id="app"></div>
