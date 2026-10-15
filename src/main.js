@@ -251,7 +251,8 @@ const render = (category) => {
         <h3 class="guide-title">${escapeHtml(product.title)}</h3>
         <p class="guide-text">${escapeHtml(product.description)}</p>
       </div>
-      <a class="guide-link" href="${escapeHtml(product.link)}" target="_blank" rel="noopener noreferrer">
+      <a class="guide-link" href="${escapeHtml(product.link)}" target="_blank" rel="noopener noreferrer"
+         data-guide="${escapeHtml(product.title)}" data-category="${escapeHtml(product.category)}">
         <span>Otevřít</span>${arrow()}
         <span class="sr-only">: ${escapeHtml(product.title)}</span>
       </a>
@@ -269,6 +270,16 @@ document.querySelector('#filters').addEventListener('click', (event) => {
     filter.setAttribute('aria-pressed', String(filter === button))
   }
   render(button.dataset.category)
+})
+
+/* Analytics (reel-insights t.js, loaded in index.html): which guide gets opened.
+   Every guide lives on Google Drive, so the visitor leaves the site on this click
+   and nothing after it - reading, finishing - can be measured. via: 'drive' tells
+   the app to show completion as "not measurable", never as 0 %. */
+grid.addEventListener('click', (event) => {
+  const link = event.target.closest('.guide-link')
+  if (!link) return
+  window.vf?.('guide_open', { guide: link.dataset.guide, category: link.dataset.category, via: 'drive' })
 })
 
 render(ALL)
