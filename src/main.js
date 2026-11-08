@@ -101,7 +101,7 @@ document.querySelector('#app').innerHTML = `
           <div class="hero-copy">
             <h1 class="bt">${words(headlineLead)} <span class="hl">${words(headlineMark, leadCount)}</span><span class="hl-tail">.</span></h1>
             <!-- His text from the v3 page, unchanged. -->
-            <p class="lede rise d2">Čau čau, doufám, že se máš naprosto skvěle! Tady najdeš kompletní knihovnu všech mých rad a návodů, které jsem na Instagramu postoval a vytvářel. Věřím, že pomůžou i tobě.</p>
+            <p class="lede rise d2">Tady najdeš všechny návody, které jsem kdy ukázal v reelech na Instagramu. Vyber si ten, který zrovna potřebuješ, a otevře se ti celý.</p>
             <div class="hero-actions rise d3">
               <a class="btn" href="#navody">Projít knihovnu ${arrow('down')}</a>
             </div>
@@ -156,7 +156,7 @@ document.querySelector('#app').innerHTML = `
             <p class="eyebrow reveal">Zdarma a bez registrace</p>
             <h2 class="reveal d1">Knihovna.</h2>
           </div>
-          <p class="lede reveal d2">Klikni na kterýkoliv návod a otevře se ti rovnou celý. Žádný e-mail, žádný háček.</p>
+          <p class="lede reveal d2">Klikni na kterýkoliv návod a otevře se ti rovnou celý, bez e-mailu a bez registrace.</p>
         </header>
 
         <div class="filter-row reveal">
@@ -180,12 +180,12 @@ document.querySelector('#app').innerHTML = `
           <h2 class="reveal d1">Každou neděli ${highlight('jeden mail', '.')}</h2>
           <!-- "Kromě návodů" + his own line from the tnextlvl.com hero
                (2026-10-14), so the two sites promise the same mail. -->
-          <p class="lede reveal d2">Kromě návodů ti každou neděli ráno napíšu 1&nbsp;zkušenost z mojí cesty na Ironmana a 200&nbsp;km běh.</p>
+          <p class="lede reveal d2">Kromě návodů ti každou neděli ráno napíšu 1&nbsp;zkušenost z mého týdne, z firmy i z cesty na Ironmana a na 200&nbsp;km běh.</p>
         </div>
 
         <div class="newsletter-action reveal d2">
           <a class="btn" href="${NEWSLETTER}">Odebírat nedělní mail ${arrow()}</a>
-          <p class="fineprint">Zdarma · V každým mailu se dá odhlásit</p>
+          <p class="fineprint">Zdarma · V každém mailu se dá odhlásit</p>
         </div>
       </div>
     </section>
