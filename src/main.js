@@ -180,7 +180,7 @@ document.querySelector('#app').innerHTML = `
           <h2 class="reveal d1">Každou neděli ${highlight('jeden mail', '.')}</h2>
           <!-- "Kromě návodů" + his own line from the tnextlvl.com hero
                (2026-10-14), so the two sites promise the same mail. -->
-          <p class="lede reveal d2">Kromě návodů ti každou neděli ráno napíšu 1&nbsp;zkušenost z mého týdne, z firmy i z cesty na Ironmana a 200&nbsp;km běh.</p>
+          <p class="lede reveal d2">Kromě návodů ti každou neděli ráno napíšu 1&nbsp;zkušenost z mého týdne, z firmy i z cesty na Ironmana a na 200&nbsp;km běh.</p>
         </div>
 
         <div class="newsletter-action reveal d2">
